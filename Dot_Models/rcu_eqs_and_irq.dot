@@ -1,0 +1,18 @@
+digraph state_automaton {
+	center = true;
+	// size = "700,800";
+	nodesep = 0.5;
+	"__init" [shape=plaintext, style=invis, label=""];
+	node [shape=ellipse, fontsize=10, color=green3];
+	edge [fontsize=10];
+
+	"__init" -> "rcu_eqs";
+	"rcu_eqs" -> "irq" -> "irq_nested" [label="rcu_irq_enter"];
+	"irq_nested" -> "irq" -> "rcu_eqs" [label="rcu_irq_exit"];
+
+	subgraph init {
+		rank = min;
+		"__init";
+		"rcu_eqs";
+	}
+}
